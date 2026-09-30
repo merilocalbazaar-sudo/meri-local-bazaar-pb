@@ -1,0 +1,369 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role authentication",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "seller", "delivery_partner", "admin"] },
+        "phoneNumber": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Address": {
+      "title": "Address",
+      "description": "Customer delivery addresses",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "streetAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "landmark": { "type": "string" },
+        "isDefault": { "type": "boolean" },
+        "addressType": { "type": "string", "enum": ["home", "work", "other"] }
+      },
+      "required": ["userId", "fullName", "phoneNumber", "streetAddress", "city", "state", "postalCode"]
+    },
+    "Shop": {
+      "title": "Shop",
+      "description": "Vendor shop profile and business registration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "shopAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "panNumber": { "type": "string" },
+        "bankDetails": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending_approval", "approved", "rejected", "suspended"] },
+        "rating": { "type": "number" },
+        "totalProducts": { "type": "number" },
+        "totalSales": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["ownerId", "shopName", "phoneNumber", "shopAddress", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Vendor product catalog items",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "shopId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "stock": { "type": "number" },
+        "sku": { "type": "string" },
+        "images": { "type": "array" },
+        "specifications": { "type": "object" },
+        "isActive": { "type": "boolean" },
+        "isApproved": { "type": "boolean" },
+        "deliveryAvailable": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["shopId", "name", "category", "price", "stock", "isActive"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Marketplace product categories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name"]
+    },
+    "Cart": {
+      "title": "Cart",
+      "description": "Customer active shopping cart",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "items"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order master record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "deliveryAddress": { "type": "object" },
+        "totalAmount": { "type": "number" },
+        "subtotal": { "type": "number" },
+        "deliveryCharge": { "type": "number" },
+        "platformFee": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["upi", "card", "cod"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "paid", "failed", "refunded"] },
+        "orderStatus": { "type": "string", "enum": ["pending", "confirmed", "processing", "packed", "ready_for_pickup", "assigned_to_delivery_partner", "picked_up", "out_for_delivery", "delivered", "cancelled", "returned"] },
+        "deliveryPartnerId": { "type": "string" },
+        "deliveryPartnerName": { "type": "string" },
+        "deliveryOtp": { "type": "string" },
+        "items": { "type": "array" },
+        "sellerIds": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["customerId", "totalAmount", "orderStatus", "paymentMethod", "paymentStatus", "items"]
+    },
+    "SellerOrder": {
+      "title": "SellerOrder",
+      "description": "Fulfillment record specific to each seller in an order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "deliveryAddress": { "type": "object" },
+        "items": { "type": "array" },
+        "sellerSubtotal": { "type": "number" },
+        "commissionAmount": { "type": "number" },
+        "sellerEarnings": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "processing", "packed", "ready_for_pickup", "picked_up", "delivered", "cancelled"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["orderId", "sellerId", "status", "sellerSubtotal", "sellerEarnings"]
+    },
+    "DeliveryPartner": {
+      "title": "DeliveryPartner",
+      "description": "Delivery partner registration and profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "dateOfBirth": { "type": "string" },
+        "address": { "type": "string" },
+        "serviceArea": { "type": "string" },
+        "vehicleType": { "type": "string" },
+        "vehicleNumber": { "type": "string" },
+        "drivingLicenceNumber": { "type": "string" },
+        "idProofNumber": { "type": "string" },
+        "bankDetails": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended"] },
+        "isOnline": { "type": "boolean" },
+        "totalDeliveries": { "type": "number" },
+        "rating": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["fullName", "phoneNumber", "status", "vehicleType"]
+    },
+    "DeliveryAssignment": {
+      "title": "DeliveryAssignment",
+      "description": "Order delivery tasks and assignment tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "sellerOrderId": { "type": "string" },
+        "deliveryPartnerId": { "type": "string" },
+        "deliveryPartnerName": { "type": "string" },
+        "shopId": { "type": "string" },
+        "shopName": { "type": "string" },
+        "shopAddress": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "deliveryAddress": { "type": "object" },
+        "deliveryFee": { "type": "number" },
+        "earningAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["available", "assigned", "picked_up", "out_for_delivery", "delivered", "cancelled", "rejected"] },
+        "otp": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["orderId", "status", "earningAmount"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Seller or Delivery Partner financial wallet",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "role": { "type": "string", "enum": ["seller", "delivery_partner"] },
+        "currentBalance": { "type": "number" },
+        "totalEarnings": { "type": "number" },
+        "todayEarnings": { "type": "number" },
+        "pendingEarnings": { "type": "number" },
+        "totalPayouts": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["ownerId", "role", "currentBalance"]
+    },
+    "WalletTransaction": {
+      "title": "WalletTransaction",
+      "description": "Individual credit/debit transaction on a wallet",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "walletId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "role": { "type": "string" },
+        "type": { "type": "string", "enum": ["credit", "debit", "payout"] },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "referenceId": { "type": "string" },
+        "orderId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["walletId", "ownerId", "type", "amount"]
+    },
+    "PayoutRequest": {
+      "title": "PayoutRequest",
+      "description": "Withdrawal request by seller or delivery partner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "requesterId": { "type": "string" },
+        "requesterName": { "type": "string" },
+        "requesterRole": { "type": "string", "enum": ["seller", "delivery_partner"] },
+        "shopId": { "type": "string" },
+        "amount": { "type": "number" },
+        "upiId": { "type": "string" },
+        "bankDetails": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "approved", "processing", "paid", "rejected"] },
+        "transactionRef": { "type": "string" },
+        "adminNotes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "processedAt": { "type": "string" }
+      },
+      "required": ["requesterId", "requesterRole", "amount", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Push and in-app notifications for orders and events",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "recipientRole": { "type": "string", "enum": ["customer", "seller", "delivery_partner", "admin", "all"] },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["order", "delivery", "payout", "system", "approval"] },
+        "referenceId": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "message", "type", "isRead"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global platform rules and fee configurations",
+      "type": "object",
+      "properties": {
+        "sellerCommissionPercent": { "type": "number" },
+        "platformFee": { "type": "number" },
+        "deliveryBaseCharge": { "type": "number" },
+        "deliveryPartnerEarningPerOrder": { "type": "number" },
+        "minPayoutAmount": { "type": "number" },
+        "autoApproveProducts": { "type": "boolean" },
+        "cashOnDeliveryEnabled": { "type": "boolean" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["sellerCommissionPercent", "deliveryPartnerEarningPerOrder"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/addresses/{addressId}": {
+      "schema": "Address",
+      "description": "Customer delivery addresses"
+    },
+    "/shops/{shopId}": {
+      "schema": "Shop",
+      "description": "Seller business shops"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Marketplace product catalog"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/cart/{userId}": {
+      "schema": "Cart",
+      "description": "Customer carts"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders"
+    },
+    "/seller_orders/{sellerOrderId}": {
+      "schema": "SellerOrder",
+      "description": "Per-seller fulfillment orders"
+    },
+    "/delivery_partners/{partnerId}": {
+      "schema": "DeliveryPartner",
+      "description": "Delivery partner profiles"
+    },
+    "/delivery_assignments/{assignmentId}": {
+      "schema": "DeliveryAssignment",
+      "description": "Delivery tasks assigned to delivery partners"
+    },
+    "/wallets/{walletId}": {
+      "schema": "Wallet",
+      "description": "Seller and Delivery Partner balances"
+    },
+    "/wallet_transactions/{transactionId}": {
+      "schema": "WalletTransaction",
+      "description": "Financial ledger transactions"
+    },
+    "/payout_requests/{payoutId}": {
+      "schema": "PayoutRequest",
+      "description": "Payout requests"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "In-app and push notifications"
+    },
+    "/settings/{settingId}": {
+      "schema": "Settings",
+      "description": "Platform settings"
+    }
+  }
+}

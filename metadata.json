@@ -1,0 +1,6 @@
+{
+  "name": "BazaarX - Multi-Vendor Marketplace",
+  "description": "Complete Flipkart-style multi-vendor e-commerce platform with Customer, Seller, Delivery Partner, and Admin roles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

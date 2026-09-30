@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profiles
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+    
+    // Customer addresses
+    match /addresses/{addressId} {
+      allow read, write: if true;
+    }
+    
+    // Shops
+    match /shops/{shopId} {
+      allow read, write: if true;
+    }
+    
+    // Products
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+    
+    // Categories
+    match /categories/{categoryId} {
+      allow read, write: if true;
+    }
+    
+    // Cart
+    match /cart/{userId} {
+      allow read, write: if true;
+    }
+    
+    // Orders
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+    
+    // Seller Orders
+    match /seller_orders/{sellerOrderId} {
+      allow read, write: if true;
+    }
+    
+    // Delivery Partners
+    match /delivery_partners/{partnerId} {
+      allow read, write: if true;
+    }
+    
+    // Delivery Assignments
+    match /delivery_assignments/{assignmentId} {
+      allow read, write: if true;
+    }
+    
+    // Wallets
+    match /wallets/{walletId} {
+      allow read, write: if true;
+    }
+    
+    // Wallet Transactions
+    match /wallet_transactions/{transactionId} {
+      allow read, write: if true;
+    }
+    
+    // Payout Requests
+    match /payout_requests/{payoutId} {
+      allow read, write: if true;
+    }
+    
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+    
+    // Platform Settings
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Connection testing
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
